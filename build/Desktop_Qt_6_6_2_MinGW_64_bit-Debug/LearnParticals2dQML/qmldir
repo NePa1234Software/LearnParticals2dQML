@@ -1,7 +1,0 @@
-module LearnParticals2dQML
-typeinfo appLearnParticals2dQML.qmltypes
-prefer :/qt/qml/LearnParticals2dQML/
-Main 1.0 Main.qml
-EditableShape 1.0 EditableShape.qml
-DragPoint 1.0 DragPoint.qml
-
