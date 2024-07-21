@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/qt/qml/LearnParticals2dQML">
+    <file alias="qmldir">C:/Daten/QML/LearnParticals2dQML/build/Desktop_Qt_6_6_2_MinGW_64_bit-Debug/LearnParticals2dQML/qmldir</file>
+  </qresource>
+</RCC>
+

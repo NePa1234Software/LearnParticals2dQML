@@ -1,0 +1,8 @@
+<RCC>
+  <qresource prefix="/qt/qml/LearnParticals2dQML/">
+    <file alias="Main.qml">C:/Daten/QML/LearnParticals2dQML/Main.qml</file>
+    <file alias="EditableShape.qml">C:/Daten/QML/LearnParticals2dQML/EditableShape.qml</file>
+    <file alias="DragPoint.qml">C:/Daten/QML/LearnParticals2dQML/DragPoint.qml</file>
+  </qresource>
+</RCC>
+
