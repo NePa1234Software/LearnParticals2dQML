@@ -2,7 +2,6 @@ import QtQml
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import QtQuick.Particles
 
 // Particle editor will allow you to create your particles interactively.
 //
@@ -21,7 +20,7 @@ import QtQuick.Particles
 // - Add an editor pane (like QmlDesigner does) for each element
 // - any other idea that comes to mind while do this (-;
 
-Window {
+ApplicationWindow {
     id: root
 
     width: 640
@@ -29,84 +28,75 @@ Window {
     visible: true
     title: qsTr("Partical Editor (v1.0) - by Neil Parker")
 
-    QtObject {
-        id: priv
+    header: ToolBar {
+        RowLayout {
+            anchors.fill: parent
 
-        property list<EditableShape> shapes
-
-        function createEmitterShape(posX : real, posY : real ) {
-            var newShape = componentEditableShape.createObject(root, { x: posX, y: posY })
-            if (!newShape) {
-                console.error("creation failed")
-            } else {
-                priv.shapes.push(newShape)
+            ButtonGroup {
+                buttons: modeButtons.children
             }
-        }
-    }
 
-    Component {
-        id: componentEditableShape
-
-        EditableShape {
-            id: editabelShape
-            editing: editButton.checked
-            hidden: hideButton.checked
-            onRequestShapeMove: (positionNew) => {
-                editabelShape.x = positionNew.x
-                editabelShape.y = positionNew.y
+            RowLayout {
+                id: modeButtons
+                ToolButton {
+                    id: editButton
+                    checked: true
+                    checkable: true
+                    text: "Edit"
+                }
+                ToolButton {
+                    id: showButton
+                    checkable: true
+                    text: "Show"
+                }
+                ToolButton {
+                    id: hideButton
+                    checkable: true
+                    text: "Hide"
+                }
             }
+
+            ToolSeparator {}
+
+            ToolButton {
+                id: playButton
+                checkable: true
+                text: "Play"
+            }
+            ToolSeparator {}
+            ToolButton {
+                id: createButton
+                text: "New Emitter"
+                onClicked: shapeEditor.createShape(
+                               100 + 20 * shapeEditor.shapes.length,
+                               100 + 20 * shapeEditor.shapes.length,
+                               "emitter",
+                               EditableShape.ShapeType.ShapeTypePath)
+            }
+            ToolButton {
+                id: createAttractorButton
+                text: "New Attractor"
+                onClicked: shapeEditor.createShape(
+                               100 + 20 * shapeEditor.shapes.length,
+                               100 + 20 * shapeEditor.shapes.length,
+                               "attractor",
+                               EditableShape.ShapeType.ShapeTypeSpot)
+            }
+            Item { Layout.fillWidth: true }
+            Label { text: "Qt" }
         }
     }
 
-    RowLayout {
-        Button {
-            id: editButton
-            checkable: true
-            text: checked ? "Normal mode" : "Edit mode"
-        }
-        Button {
-            id: createButton
-            text: "Create Emitter"
-            onClicked: priv.createEmitterShape(
-                           100 + 20 * priv.shapes.length,
-                           100 + 20 * priv.shapes.length)
-        }
-        Button {
-            id: hideButton
-            text: !checked ? "Hide Emitter" : "Show Emitter"
-            checkable: true
-        }
+    ShapeEditor {
+        id: shapeEditor
+        editing: editButton.checked
+        hidden: hideButton.checked
     }
 
-    ParticleSystem {
+    CustomParticleSystem {
         id: sys
         anchors.fill: parent
-    }
-
-    Repeater {
-        model: priv.shapes.length
-        delegate: Emitter {
-            id: emitter
-            property real pathPosPercent: 0.0
-            property point pathPosition: priv.shapes[index].pointAtPercent(emitter.pathPosPercent)
-            NumberAnimation on pathPosPercent { from: 0; to: 1.0; duration: 210; loops: Animation.Infinite; running: true }
-
-            group: "stars"
-            emitRate: 20
-            lifeSpan: 1000
-            size: 50
-            sizeVariation: 5
-            system: sys
-            x: priv.shapes[index].x + emitter.pathPosition.x
-            y: priv.shapes[index].y + emitter.pathPosition.y
-        }
-    }
-
-    ImageParticle {
-        groups: ["stars"]
-        source: "qrc:///particleresources/star.png"
-        system: sys
-        anchors.fill: parent
-        color: "orange"
+        shapes: shapeEditor.shapes
+        running: playButton.checked
     }
 }

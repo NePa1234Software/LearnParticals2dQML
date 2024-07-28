@@ -27,7 +27,7 @@ Rectangle {
         property point lastPressed
         property point lastPosition
         anchors.fill: parent
-        anchors.margins: -20
+        anchors.margins: -5
         cursorShape: Qt.ClosedHandCursor
         acceptedButtons: Qt.AllButtons
         onPressed: (mouseEvent) => {
