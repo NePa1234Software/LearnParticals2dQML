@@ -1,9 +1,14 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QSettings>
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
+    app.setOrganizationName("LearnQML");
+    app.setOrganizationDomain("LearnQML_Particles");
+
+    QSettings::setDefaultFormat(QSettings::IniFormat);
 
     QQmlApplicationEngine engine;
     QObject::connect(

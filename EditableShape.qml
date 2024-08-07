@@ -5,12 +5,15 @@ import QtQuick.Particles
 
 Shape {
     id: control
+    objectName: "EditableShape_" + control.shapeIndex
 
     property color borderColor: "blue"
     property color editBorderColor: "red"
     property bool editing: true
     property bool hidden: false
     property int shapeType: EditableShape.ShapeType.ShapeTypePath
+    property int shapeIndex: -1
+    property string particleType: ""
 
     enum ShapeType {
         ShapeTypeSpot,
@@ -23,6 +26,20 @@ Shape {
 
     function pointAtPercent(t: real) : point {
         return shapeTypeLoader.item.pointAtPercent(t)
+    }
+
+    function load() {
+        settingsId.load()
+        //shapeTypeLoader.item.save()
+    }
+    function save() {
+        settingsId.save()
+        //shapeTypeLoader.item.save()
+    }
+
+    SettingHelper {
+        id: settingsId
+        saveProperties: ["x", "y", "shapeIndex", "shapeType", "particleType"]
     }
 
     Loader {

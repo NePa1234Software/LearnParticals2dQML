@@ -82,6 +82,17 @@ ApplicationWindow {
                                "attractor",
                                EditableShape.ShapeType.ShapeTypeSpot)
             }
+            ToolSeparator {}
+            ToolButton {
+                id: loadButton
+                text: "Load"
+                onClicked: shapeEditor.load()
+            }
+            ToolButton {
+                id: saveButton
+                text: "Save"
+                onClicked: shapeEditor.save()
+            }
             Item { Layout.fillWidth: true }
             Label { text: "Qt" }
         }

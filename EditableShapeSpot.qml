@@ -9,12 +9,25 @@ Shape {
     property color editBorderColor: "red"
     property bool editing: true
     property bool hidden: false
+    property int shapeIndex: -1
 
     signal requestShapeMove(positionNew : point)
     signal requestShapeDelete()
 
     function pointAtPercent(t: real) : point {
         return Qt.point(x,y);
+    }
+
+    function load() {
+        settingsId.load()
+    }
+    function save() {
+        settingsId.save()
+    }
+
+    SettingHelper {
+        id: settingsId
+        saveProperties: ["x", "y"]
     }
 
     QtObject {
