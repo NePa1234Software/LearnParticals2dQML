@@ -29,12 +29,23 @@ Shape {
     }
 
     function load() {
-        settingsId.load()
-        //shapeTypeLoader.item.save()
+        settingsId.load();
+        if (shapeTypeLoader.item) {
+            shapeTypeLoader.item.load();
+        } else {
+            priv.loadRequested = true;
+        }
     }
     function save() {
-        settingsId.save()
-        //shapeTypeLoader.item.save()
+        settingsId.save();
+        if (shapeTypeLoader.item) {
+            shapeTypeLoader.item.save();
+        }
+    }
+
+    QtObject {
+        id: priv
+        property bool loadRequested: false
     }
 
     SettingHelper {
@@ -48,6 +59,12 @@ Shape {
         sourceComponent: if (control.shapeType == EditableShape.ShapeType.ShapeTypePath) {
                              return componentPath
                          } else { return componentSpot }
+        onLoaded: {
+            if (priv.loadRequested) {
+                priv.loadRequested = false;
+                shapeTypeLoader.item.load();
+            }
+        }
     }
 
     Component {
@@ -57,6 +74,7 @@ Shape {
             hidden: control.hidden
             borderColor: control.borderColor
             editBorderColor: control.editBorderColor
+            shapeIndex: control.shapeIndex
             onRequestShapeMove: (pointNew) => {
                                     control.requestShapeMove(pointNew)
                                 }
@@ -73,6 +91,7 @@ Shape {
             hidden: control.hidden
             borderColor: control.borderColor
             editBorderColor: control.editBorderColor
+            shapeIndex: control.shapeIndex
             onRequestShapeMove: (pointNew) => {
                                     control.requestShapeMove(pointNew)
                                 }

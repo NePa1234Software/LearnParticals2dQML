@@ -4,6 +4,7 @@ import QtQuick.Particles
 
 Shape {
     id: control
+    objectName: "EditableShapeSpot_" + control.shapeIndex
 
     property color borderColor: "blue"
     property color editBorderColor: "red"
@@ -27,7 +28,7 @@ Shape {
 
     SettingHelper {
         id: settingsId
-        saveProperties: ["x", "y"]
+        saveProperties: []
     }
 
     QtObject {

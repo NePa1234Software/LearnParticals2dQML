@@ -6,7 +6,7 @@ Item {
     id: control
     property QtObject target: parent
     property string category: parent.objectName
-    property list<string> saveProperties: ["x","y"]
+    property list<string> saveProperties: []
     property alias settings: settingsId
 
     function load() {
@@ -15,8 +15,10 @@ Item {
         control.saveProperties.forEach((element) => {
             console.log("loading property category %1:".arg(settingsId.category), element)
             var loadValue = settingsId.value(element);
-            PropertyIntrospection.writeProperty(control.target, element, loadValue);
-            console.log("loaded  property category %1:".arg(settingsId.category), element, "=", loadValue);
+            if (loadValue) {
+                PropertyIntrospection.writeProperty(control.target, element, loadValue);
+                console.log("loaded  property category %1:".arg(settingsId.category), element, "=", loadValue);
+            }
         })
     }
 
@@ -26,7 +28,9 @@ Item {
         control.saveProperties.forEach((element) => {
             var saveValue = PropertyIntrospection.readProperty(control.target, element);
             console.log("save property category %1:".arg(settingsId.category), element, "=", saveValue)
-            settingsId.setValue(element, saveValue);
+            if (saveValue !== undefined) {
+                settingsId.setValue(element, saveValue);
+            }
         })
     }
 
