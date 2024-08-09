@@ -32,6 +32,12 @@ qt_add_qml_module(appLearnParticals2dQML
         QML_FILES CustomEmitter.qml
         SOURCES propertyintrospection.h
         QML_FILES SettingHelper.qml
+        QML_FILES MainToolBar.qml
+        QML_FILES Globals.qml
+)
+
+set_source_files_properties(Globals.qml PROPERTIES
+    QT_QML_SINGLETON_TYPE TRUE
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

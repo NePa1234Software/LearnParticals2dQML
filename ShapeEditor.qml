@@ -24,6 +24,7 @@ Item {
             console.error("creation failed: ", particleType)
         } else {
             control.shapes.push(newShape)
+            Globals.currentSelection = control.creationIndex
             control.creationIndex++
         }
     }
