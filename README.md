@@ -1,5 +1,8 @@
 # LearnParticles2dQML
 
+<img src="docs/Screenshot1.gif" width="640" height="360">
+<img src="docs/Screenshot2_edit.gif" width="640" height="360">
+
 This is a work in progress (just started!) application purely for learning the Qt particle system
 and a few other things that I have been wanting to practice, like Shapes and user
 interaction with the UI controls.
