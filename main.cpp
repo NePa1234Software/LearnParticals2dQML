@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QSettings>
 #include <QStandardPaths>
+#include <QQuickStyle>
 
 int main(int argc, char *argv[])
 {
@@ -9,6 +10,8 @@ int main(int argc, char *argv[])
     app.setOrganizationName("LearnQML");
     app.setOrganizationDomain("LearnQML_Particles");
     app.setApplicationName("LearnQML_Particles");
+
+    QQuickStyle::setStyle("Material");
 
     // Global settings for QML Settings Item
     QSettings::setDefaultFormat(QSettings::IniFormat);

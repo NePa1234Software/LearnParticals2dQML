@@ -33,7 +33,7 @@ Shape {
 
     QtObject {
         id: priv
-        property int strokeWidth: 2
+        property int dotWidth: 2
     }
 
     Rectangle {
@@ -53,7 +53,7 @@ Shape {
         y: control.y
         color: control.editBorderColor
         border.color: control.editBorderColor
-        border.width: priv.strokeWidth
+        border.width: priv.dotWidth
         cursorShape: Qt.DragMoveCursor
         onRequestPointMove: (pointNew) => {
             control.requestShapeMove(pointNew)

@@ -2,6 +2,9 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
+// Icons
+// - https://specifications.freedesktop.org/icon-naming-spec/latest/
+// - https://doc.qt.io/qt-6/qtquickcontrols-icons.html
 ToolBar {
     id: control
     objectName: "MainToolBar"
@@ -17,22 +20,21 @@ ToolBar {
     signal loadRequest()
     signal saveRequest()
 
-    // Bundle the settings
-    SettingHelper {
-        id: settingsId
-        target: control
-        saveProperties: ["editMode", "showMode", "hideMode", "playMode"]
-    }
-
     RowLayout {
+        id: layoutToolBar
         anchors.fill: parent
 
         RowLayout {
             id: modeButtons
+            Layout.fillHeight: true
+            Layout.alignment: Qt.AlignVCenter
+
             ToolButton {
                 id: editButton
                 checked: control.editMode
                 text: "Edit"
+                icon.name: "edit-cut"
+                display: AbstractButton.TextUnderIcon
                 onClicked: {
                     control.editMode = true
                     control.showMode = false
@@ -77,13 +79,15 @@ ToolBar {
         }
         ToolButton {
             id: createAttractorButton
-            text: "New Attractor"
+            text: "New Attractor"            
             onClicked: control.createAttractorRequest()
         }
         ToolSeparator {}
         ToolButton {
             id: loadButton
             text: "Load"
+            display: AbstractButton.TextUnderIcon
+            icon.name: "document-open"
             onClicked: {
                 settingsId.load()
                 control.loadRequest()
@@ -92,13 +96,26 @@ ToolBar {
         ToolButton {
             id: saveButton
             text: "Save"
+            display: AbstractButton.TextUnderIcon
+            icon.name: "document-save"
             onClicked: {
                 settingsId.save()
                 control.saveRequest()
             }
         }
         Item { id: spacer; Layout.fillWidth: true }
-        Label { text: "Qt" }
+        ToolButton {
+            text: "Qt"
+            onClicked: Qt.openUrlExternally("https://www.qt.io/qt-licensing")
+        }
+
+        // Put this inside the layout to ensure layouting of ToolBar works
+        // Bundle the settings
+        SettingHelper {
+            id: settingsId
+            target: control
+            saveProperties: ["editMode", "showMode", "hideMode", "playMode"]
+        }
     }
 
     Component.onCompleted: settingsId.load()

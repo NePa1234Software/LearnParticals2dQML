@@ -38,35 +38,17 @@ Shape {
 
     QtObject {
         id: priv
-        property int strokeWidth: 2
-    }
-
-    Rectangle {
-        visible: control.editing
-        border.color: "yellow"
-        border.width: 2
-        color: "transparent"
-        x: boundingRect.x
-        y: boundingRect.y
-        width: boundingRect.width
-        height: boundingRect.height
-    }
-
-    Rectangle {
-        visible: control.editing
-        border.color: "orange"
-        border.width: 1
-        color: "transparent"
-        anchors.fill: parent
+        property int dotWidth: 2
+        property int strokeWidth: 4
     }
 
     ShapePath {
         id: strokePath
-
         strokeColor: control.borderColor
-        strokeStyle: ShapePath.SolidLine
+        strokeStyle: ShapePath.DashLine
         strokeWidth: priv.strokeWidth
         fillColor: "transparent"
+        miterLimit: 200
 
         NumberAnimation on dashOffset { from: 0; to: 6; duration: 2000; loops: Animation.Infinite }
         startX: control.pathPoints[0].x
@@ -89,15 +71,15 @@ Shape {
             x: control.pathPoints[index + 1].x
             y: control.pathPoints[index + 1].y
             border.color: control.editBorderColor
-            border.width: priv.strokeWidth
+            border.width: priv.dotWidth
             onRequestPointMove: (pointNew) => {
                 control.pathPoints[index + 1] = pointNew
             }
             onRequestPointAdd : {
                 console.log("add one point to index:", index + 1)
-                control.pathPoints[index + 1].x += 10
-                control.pathPoints[index + 1].y += 10
-                control.pathPoints.splice(index + 2, 0, Qt.point(control.pathPoints[index + 1].x - 20, control.pathPoints[index + 1].y - 20))
+                control.pathPoints.splice(index + 2, 0,
+                    Qt.point(control.pathPoints[index + 1].x + 20,
+                             control.pathPoints[index + 1].y + 20))
             }
             onRequestPointDelete: {
                 console.log("remove one point at index:", index + 1)
@@ -116,7 +98,7 @@ Shape {
         y: control.pathPoints[0].y
         color: control.editBorderColor
         border.color: control.editBorderColor
-        border.width: priv.strokeWidth
+        border.width: priv.dotWidth
         cursorShape: Qt.DragMoveCursor
         onRequestPointMove: (pointNew) => {
             control.requestShapeMove(pointNew)
@@ -128,6 +110,27 @@ Shape {
         onRequestPointDelete: {
             control.requestShapeDelete()
         }
+    }
+
+    Rectangle {
+        visible: control.editing
+        border.color: "yellow"
+        border.width: 2
+        color: "transparent"
+        x: boundingRect.x
+        y: boundingRect.y
+        width: boundingRect.width
+        height: boundingRect.height
+        z: strokePath.z - 10
+    }
+
+    Rectangle {
+        visible: control.editing
+        border.color: "orange"
+        border.width: 1
+        color: "transparent"
+        anchors.fill: parent
+        z: strokePath.z - 11
     }
 
     states: [

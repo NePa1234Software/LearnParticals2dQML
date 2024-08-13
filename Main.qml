@@ -65,5 +65,6 @@ ApplicationWindow {
         anchors.fill: parent
         shapes: shapeEditor.shapes
         running: mainToolBar.playMode
+        z: shapeEditor - 100
     }
 }
