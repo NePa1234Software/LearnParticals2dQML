@@ -3,6 +3,8 @@
 #include <QSettings>
 #include <QStandardPaths>
 #include <QQuickStyle>
+#include <QIcon>
+#include <QDir>
 
 int main(int argc, char *argv[])
 {
@@ -22,6 +24,18 @@ int main(int argc, char *argv[])
     qInfo() << "Main: setting:  format:" << tmpSettings.format();
     qInfo() << "Main: setting:   scope:" << tmpSettings.scope();
 
+    // Icon available
+    qInfo() << "Main: icons: searchPaths:\n  " << QIcon::themeSearchPaths();
+    for (auto & path : QIcon::themeSearchPaths()) {
+        QDir dir(path);
+        qInfo() << "Main: icons: dir:\n  " << dir;
+        QFileInfoList list = dir.entryInfoList();
+        qInfo() << "Main: icons: list:\n  " << list;
+        for (auto & file : list) {
+            qInfo() << file;
+        }
+    }
+
     QQmlApplicationEngine engine;
     QObject::connect(
         &engine,
@@ -29,7 +43,7 @@ int main(int argc, char *argv[])
         &app,
         []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
-    engine.loadFromModule("LearnParticals2dQML", "Main");
+    engine.loadFromModule("LearnParticles2dQML", "Main");
 
     return app.exec();
 }

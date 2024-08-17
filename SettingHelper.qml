@@ -1,6 +1,6 @@
 import QtQuick
 import QtCore
-import LearnParticals2dQML
+import LearnParticles2dQML
 
 Item {
     id: control

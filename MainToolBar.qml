@@ -5,6 +5,8 @@ import QtQuick.Layouts
 // Icons
 // - https://specifications.freedesktop.org/icon-naming-spec/latest/
 // - https://doc.qt.io/qt-6/qtquickcontrols-icons.html
+// - http://flying-sheep.github.io/freedesktop-icons/
+// - https://openapplibrary.org/dev-tutorials/qt-icon-themes
 ToolBar {
     id: control
     objectName: "MainToolBar"
@@ -24,6 +26,9 @@ ToolBar {
         id: layoutToolBar
         anchors.fill: parent
 
+        property int display: AbstractButton.TextUnderIcon
+
+
         RowLayout {
             id: modeButtons
             Layout.fillHeight: true
@@ -34,7 +39,7 @@ ToolBar {
                 checked: control.editMode
                 text: "Edit"
                 icon.name: "edit-cut"
-                display: AbstractButton.TextUnderIcon
+                display: layoutToolBar.display
                 onClicked: {
                     control.editMode = true
                     control.showMode = false
@@ -45,6 +50,7 @@ ToolBar {
                 id: showButton
                 checked: control.showMode
                 text: "Show"
+                display: layoutToolBar.display
                 onClicked: {
                     control.editMode = false
                     control.showMode = true
@@ -55,6 +61,7 @@ ToolBar {
                 id: hideButton
                 checked: control.hideMode
                 text: "Hide"
+                display: layoutToolBar.display
                 onClicked: {
                     control.editMode = false
                     control.showMode = false
@@ -63,31 +70,42 @@ ToolBar {
             }
         }
 
+        /////////////////////////////////////
+
         ToolSeparator {}
 
         ToolButton {
             id: playButton
             checked: control.playMode
             text: "Play"
+            icon.name: "media-playback-start"
+            display: layoutToolBar.display
             onClicked: control.playMode = !control.playMode
         }
         ToolSeparator {}
         ToolButton {
             id: createButton
             text: "New Emitter"
+            icon.name: "list-add"
+            display: layoutToolBar.display
             onClicked: control.createEmitterRequest()
         }
         ToolButton {
             id: createAttractorButton
             text: "New Attractor"            
+            icon.name: "list-add"
+            display: layoutToolBar.display
             onClicked: control.createAttractorRequest()
         }
+
+        /////////////////////////////////////
+
         ToolSeparator {}
         ToolButton {
             id: loadButton
             text: "Load"
-            display: AbstractButton.TextUnderIcon
             icon.name: "document-open"
+            display: layoutToolBar.display
             onClicked: {
                 settingsId.load()
                 control.loadRequest()
@@ -96,8 +114,8 @@ ToolBar {
         ToolButton {
             id: saveButton
             text: "Save"
-            display: AbstractButton.TextUnderIcon
             icon.name: "document-save"
+            display: layoutToolBar.display
             onClicked: {
                 settingsId.save()
                 control.saveRequest()
