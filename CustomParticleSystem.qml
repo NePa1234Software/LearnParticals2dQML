@@ -5,11 +5,27 @@ import Qt.labs.qmlmodels
 ParticleSystem {
     id: control
 
-    property list<EditableShape> shapes
+    required property ShapeEditor shapeEditor
+    property Item currentParticalItem: null
+
+    Connections {
+        target: shapeEditor
+        function onCurrentIndexChanged() {
+            for (var ii = 0; ii < repeater.count; ii++ )
+            {
+                var tmpItem = repeater.itemAt(ii)
+                if (tmpItem.editableShape?.shapeIndex === control.shapeEditor.currentIndex)
+                {
+                    control.currentParticalItem = tmpItem
+                    console.log("Selected partical item: ", control.currentParticalItem, (control.currentParticalItem?.objectName ?? "-?-"))
+                }
+            }
+        }
+    }
 
     Repeater {
         id: repeater
-        model: control.shapes
+        model: control.shapeEditor.shapes
         delegate: DelegateChooser {
             role: "particleType"
             DelegateChoice {
@@ -21,23 +37,11 @@ ParticleSystem {
             }
             DelegateChoice {
                 roleValue: "attractor"
-                delegate: attractorDelegate
+                delegate: CustomAttractor {
+                    editableShape: modelData
+                    system: control
+                }
             }
-        }
-    }
-
-    Component {
-        id: attractorDelegate
-
-        Attractor {
-            id: attractor
-            system: control
-            x: control.shapes[index].x
-            y: control.shapes[index].y
-            width: control.shapes[index].width
-            height: control.shapes[index].height
-            affectedParameter: Attractor.Velocity
-            strength: 1
         }
     }
 

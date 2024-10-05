@@ -12,6 +12,7 @@ Emitter {
     NumberAnimation on pathPosPercent { from: 0; to: 1.0; duration: 210; loops: Animation.Infinite; running: true }
 
     property var propertyValues: { "emitRate": 500 }
+    onPropertyValuesChanged: updateProperties()
 
     group: "stars"
     emitRate: 1
@@ -21,6 +22,10 @@ Emitter {
     // system: sys
     x: control.editableShape.x + control.pathPosition.x
     y: control.editableShape.y + control.pathPosition.y
+
+    function updateProperties() {
+        control.emitRate = control.propertyValues.emitRate ?? 500
+    }
 
     Settings {
         id: settingsId
@@ -34,6 +39,6 @@ Emitter {
         if (!control.editableShape) {
             console.error("no shape set")
         }
-        control.emitRate = control.propertyValues.emitRate
+        control.updateProperties()
     }
 }

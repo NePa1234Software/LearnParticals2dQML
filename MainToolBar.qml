@@ -15,6 +15,7 @@ ToolBar {
     property bool showMode: false
     property bool hideMode: false
     property bool playMode: false
+    property bool configMode: false
 
     signal createEmitterRequest()
     signal createAttractorRequest()
@@ -96,6 +97,18 @@ ToolBar {
             icon.name: "list-add"
             display: layoutToolBar.display
             onClicked: control.createAttractorRequest()
+        }
+
+        /////////////////////////////////////
+
+        ToolSeparator {}
+        ToolButton {
+            id: configButton
+            text: "Properties"
+            checked: control.configMode
+            icon.name: "document-properties"
+            display: layoutToolBar.display
+            onClicked: control.configMode = !control.configMode
         }
 
         /////////////////////////////////////

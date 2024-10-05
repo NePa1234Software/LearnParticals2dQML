@@ -4,8 +4,13 @@ import QtQuick.Particles
 Item {
     id: control
 
+    objectName: "Emitter_" + control.editableShape.shapeIndex
+
     property EditableShape editableShape
     property ParticleSystem system
+
+    readonly property Item item: emitterLoaderPath.item || emitterLoaderShape.item
+    property var propertyValues: { "emitRate": 500 }
 
     Loader {
         id: emitterLoaderPath
@@ -14,6 +19,7 @@ Item {
         sourceComponent: CustomEmitterPath {
             editableShape: control.editableShape
             system: control.system
+            propertyValues: control.propertyValues
         }
     }
 
@@ -24,6 +30,7 @@ Item {
         sourceComponent: CustomEmitterShape {
             editableShape: control.editableShape
             system: control.system
+            propertyValues: control.propertyValues
         }
     }
 }

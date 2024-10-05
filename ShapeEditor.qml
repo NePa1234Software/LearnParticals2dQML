@@ -5,9 +5,11 @@ Item {
     objectName: "ShapeEditor"
 
     property list<EditableShape> shapes
+    property EditableShape currentShape: null
     property bool editing: true
     property bool hidden: false
     property int creationIndex: 1
+    property int currentIndex: -1
 
     function createShape(posX : real,
                          posY : real,
@@ -77,7 +79,6 @@ Item {
         id: settingsSectionId
     }
 
-
     Component {
         id: componentEditableShape
 
@@ -89,6 +90,9 @@ Item {
             onRequestShapeMove: (positionNew) => {
                                     editableShape.x = positionNew.x
                                     editableShape.y = positionNew.y
+                                    control.currentIndex = editableShape.shapeIndex
+                                    Globals.currentSelection = editableShape.shapeIndex
+                                    control.currentShape = editableShape
                                 }
             onRequestShapeDelete: {
                 control.deleteShape(this)

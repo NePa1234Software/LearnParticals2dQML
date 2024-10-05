@@ -14,6 +14,7 @@ Shape {
     property int shapeType: EditableShape.ShapeType.ShapeTypePath
     property int shapeIndex: -1
     property string particleType: ""
+    readonly property list<string> saveProperties: ["x", "y", "shapeIndex", "shapeType", "particleType"]
 
     enum ShapeType {
         ShapeTypeSpot,
@@ -50,7 +51,7 @@ Shape {
 
     SettingHelper {
         id: settingsId
-        saveProperties: ["x", "y", "shapeIndex", "shapeType", "particleType"]
+        saveProperties: control.saveProperties
     }
 
     Loader {

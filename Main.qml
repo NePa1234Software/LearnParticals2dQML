@@ -60,11 +60,19 @@ ApplicationWindow {
         hidden: mainToolBar.hideMode
     }
 
+    ShapeConfigurator {
+        id: shapeConfigurator
+        currentShape: shapeEditor.currentShape
+        currentParticalItem: sys.currentParticalItem
+        show: mainToolBar.configMode
+        onRequestClose: mainToolBar.configMode = false
+    }
+
     CustomParticleSystem {
         id: sys
         anchors.fill: parent
-        shapes: shapeEditor.shapes
+        shapeEditor: shapeEditor
         running: mainToolBar.playMode
-        z: shapeEditor - 100
+        z: shapeEditor.z - 100
     }
 }
