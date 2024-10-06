@@ -12,6 +12,7 @@ Rectangle {
     signal requestPointMove(positionNew : point)
     signal requestPointAdd()
     signal requestPointDelete()
+    signal requestPointSelect()
 
     width: 16
     height: control.width
@@ -51,6 +52,7 @@ Rectangle {
                                //             pointNew.x, pointNew.y);
                            }
         onClicked: (mouseEvent) => {
+                       control.requestPointSelect();
                        if (mouseEvent.button == Qt.RightButton) {
                            if (mouseEvent.modifiers == Qt.ControlModifier) {
                                control.requestPointDelete();

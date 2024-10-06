@@ -19,6 +19,7 @@ Shape {
 
     signal requestShapeMove(positionNew : point)
     signal requestShapeDelete()
+    signal requestShapeSelect()
 
     function pointAtPercent(t: real) : point {
         return strokePath.pointAtPercent(t)
@@ -85,6 +86,9 @@ Shape {
                 console.log("remove one point at index:", index + 1)
                 control.pathPoints.splice(index + 1, 1)
             }
+            onRequestPointSelect: {
+                control.requestShapeSelect()
+            }
         }
     }
 
@@ -109,6 +113,9 @@ Shape {
         }
         onRequestPointDelete: {
             control.requestShapeDelete()
+        }
+        onRequestPointSelect: {
+            control.requestShapeSelect()
         }
     }
 

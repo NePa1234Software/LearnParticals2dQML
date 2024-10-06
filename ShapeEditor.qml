@@ -97,6 +97,11 @@ Item {
             onRequestShapeDelete: {
                 control.deleteShape(this)
             }
+            onRequestShapeSelect: {
+                control.currentIndex = editableShape.shapeIndex
+                Globals.currentSelection = editableShape.shapeIndex
+                control.currentShape = editableShape
+            }
         }
     }
 }

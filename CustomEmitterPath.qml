@@ -4,15 +4,15 @@ import QtCore
 
 Emitter {
     id: control
+    objectName: "Emitter_" + control.editableShape.shapeIndex
 
     property EditableShape editableShape
+    property var propertyValues
+    property list<string> saveProperties
 
     property real pathPosPercent: 0.0
     property point pathPosition: control.editableShape.pointAtPercent(control.pathPosPercent)
     NumberAnimation on pathPosPercent { from: 0; to: 1.0; duration: 210; loops: Animation.Infinite; running: true }
-
-    property var propertyValues: { "emitRate": 500 }
-    onPropertyValuesChanged: updateProperties()
 
     group: "stars"
     emitRate: 1
@@ -23,22 +23,21 @@ Emitter {
     x: control.editableShape.x + control.pathPosition.x
     y: control.editableShape.y + control.pathPosition.y
 
-    function updateProperties() {
-        control.emitRate = control.propertyValues.emitRate ?? 500
+    function load() {
+        settingsId.load()
+    }
+    function save() {
+        settingsId.save()
     }
 
-    Settings {
+    SettingHelper {
         id: settingsId
-        category: "Emitter_" + control.editableShape.shapeIndex
-        Component.onCompleted: {
-            console.log("Emitter: Settings location: ", settingsId.location)
-        }
+        saveProperties: control.saveProperties
     }
 
     Component.onCompleted: {
         if (!control.editableShape) {
             console.error("no shape set")
         }
-        control.updateProperties()
     }
 }

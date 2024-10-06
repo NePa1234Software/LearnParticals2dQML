@@ -24,6 +24,7 @@ Shape {
 
     signal requestShapeMove(positionNew : point)
     signal requestShapeDelete()
+    signal requestShapeSelect()
 
     function pointAtPercent(t: real) : point {
         return shapeTypeLoader.item.pointAtPercent(t)
@@ -82,6 +83,9 @@ Shape {
             onRequestShapeDelete: {
                 control.requestShapeDelete()
             }
+            onRequestShapeSelect: {
+                control.requestShapeSelect()
+            }
         }
     }
 
@@ -98,6 +102,9 @@ Shape {
                                 }
             onRequestShapeDelete: {
                 control.requestShapeDelete()
+            }
+            onRequestShapeSelect: {
+                control.requestShapeSelect()
             }
         }
     }

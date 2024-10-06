@@ -23,7 +23,7 @@ import QtQuick.Layouts
 ApplicationWindow {
     id: root
 
-    width: 800
+    width: 1200
     height: 600
     visible: true
     title: qsTr("Partical Editor (v1.0) - by Neil Parker")
@@ -46,11 +46,11 @@ ApplicationWindow {
         }
         onLoadRequest: {
             shapeEditor.load()
-            // TODO sys.load()
+            sys.load()
         }
         onSaveRequest: {
             shapeEditor.save()
-            // TODO sys.load()
+            sys.save()
         }
     }
 

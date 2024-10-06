@@ -14,6 +14,7 @@ Shape {
 
     signal requestShapeMove(positionNew : point)
     signal requestShapeDelete()
+    signal requestShapeSelect()
 
     function pointAtPercent(t: real) : point {
         return Qt.point(x,y);
@@ -60,6 +61,9 @@ Shape {
         }
         onRequestPointDelete: {
             control.requestShapeDelete()
+        }
+        onRequestPointSelect: {
+            control.requestShapeSelect()
         }
     }
 }

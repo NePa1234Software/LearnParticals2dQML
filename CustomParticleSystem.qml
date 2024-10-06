@@ -8,6 +8,21 @@ ParticleSystem {
     required property ShapeEditor shapeEditor
     property Item currentParticalItem: null
 
+    function save() {
+        for (var ii = 0; ii < repeater.count; ii++ )
+        {
+            var tmpItem = repeater.itemAt(ii)
+            tmpItem.save()
+        }
+    }
+    function load() {
+        for (var ii = 0; ii < repeater.count; ii++ )
+        {
+            var tmpItem = repeater.itemAt(ii)
+            tmpItem.load()
+        }
+    }
+
     Connections {
         target: shapeEditor
         function onCurrentIndexChanged() {
@@ -16,7 +31,7 @@ ParticleSystem {
                 var tmpItem = repeater.itemAt(ii)
                 if (tmpItem.editableShape?.shapeIndex === control.shapeEditor.currentIndex)
                 {
-                    control.currentParticalItem = tmpItem
+                    control.currentParticalItem = tmpItem.isFactory ? tmpItem.item : tmpItem
                     console.log("Selected partical item: ", control.currentParticalItem, (control.currentParticalItem?.objectName ?? "-?-"))
                 }
             }
