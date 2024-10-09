@@ -7,8 +7,8 @@ Emitter {
     objectName: "Emitter_" + control.editableShape.shapeIndex
 
     property EditableShape editableShape
-    property var propertyValues
-    property list<string> saveProperties
+    property ListModel propertyValues: ConfigListModelEmitter {}
+    property list<string> saveProperties: propertyValues.saveProperties
 
     property real pathPosPercent: 0.0
     property point pathPosition: control.editableShape.pointAtPercent(control.pathPosPercent)
@@ -22,18 +22,6 @@ Emitter {
     // system: sys
     x: control.editableShape.x + control.pathPosition.x
     y: control.editableShape.y + control.pathPosition.y
-
-    function load() {
-        settingsId.load()
-    }
-    function save() {
-        settingsId.save()
-    }
-
-    SettingHelper {
-        id: settingsId
-        saveProperties: control.saveProperties
-    }
 
     Component.onCompleted: {
         if (!control.editableShape) {

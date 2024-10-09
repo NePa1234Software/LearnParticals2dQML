@@ -5,8 +5,8 @@ Emitter {
     id: control
     objectName: "Emitter_" + control.editableShape.shapeIndex
     property EditableShape editableShape
-    property var propertyValues
-    property list<string> saveProperties
+    property ListModel propertyValues: ConfigListModelEmitter {}
+    property list<string> saveProperties: propertyValues.saveProperties
 
     group: "stars"
     emitRate: 200
@@ -16,17 +16,6 @@ Emitter {
     // system: sys
     x: control.editableShape.x
     y: control.editableShape.y
-
-    function load() {
-        settingsId.load()
-    }
-    function save() {
-        settingsId.save()
-    }
-    SettingHelper {
-        id: settingsId
-        saveProperties: control.saveProperties
-    }
 
     Component.onCompleted: {
         if (!control.editableShape) {

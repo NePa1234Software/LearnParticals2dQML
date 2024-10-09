@@ -5,8 +5,8 @@ Attractor {
     id: control
 
     property EditableShape editableShape
-    property var propertyValues: { "strength": { "type": "Slider", "from": 1, "to": 20, "stepSize": 0.1} }
-    property list<string> saveProperties: [ "strength" ]
+    property ListModel propertyValues: ConfigListModelAttractor {}
+    property list<string> saveProperties: propertyValues.saveProperties
 
     objectName: "Attractor_" + control.editableShape.shapeIndex
     system: control

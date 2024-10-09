@@ -11,17 +11,20 @@ Item {
 
     readonly property bool isFactory: true
     readonly property Item item: emitterLoaderPath.item || emitterLoaderShape.item
-    property var propertyValues: {
-        "emitRate": { "type": "Slider", "from": 1, "to": 1000, "stepSize": 0.1},
-        "lifeSpan": { "type": "Slider", "from": 0, "to": 600000, "stepSize": 10}
-    }
-    property list<string> saveProperties: [ "emitRate", "lifeSpan" ]
 
-    function save() {
-        control.item?.save()
-    }
+    property ListModel propertyValues: ConfigListModelEmitter {}
+    property list<string> saveProperties: propertyValues.saveProperties
+
     function load() {
-        control.item?.load()
+        settingsId.load()
+    }
+    function save() {
+        settingsId.save()
+    }
+    SettingHelper {
+        id: settingsId
+        target: item
+        saveProperties: control.saveProperties
     }
 
     Loader {
@@ -31,8 +34,6 @@ Item {
         sourceComponent: CustomEmitterPath {
             editableShape: control.editableShape
             system: control.system
-            propertyValues: control.propertyValues
-            saveProperties: control.saveProperties
         }
     }
 
@@ -43,8 +44,6 @@ Item {
         sourceComponent: CustomEmitterShape {
             editableShape: control.editableShape
             system: control.system
-            propertyValues: control.propertyValues
-            saveProperties: control.saveProperties
         }
     }
 }
