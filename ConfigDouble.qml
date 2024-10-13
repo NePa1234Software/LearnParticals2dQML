@@ -9,7 +9,7 @@ Item {
 
     implicitWidth: configLayout.implicitWidth
     implicitHeight: configLayout.implicitHeight
-    objectName: "ConfigSlider"
+    objectName: "ConfigDouble"
 
     ColumnLayout {
         id: configLayout
@@ -21,15 +21,15 @@ Item {
             Layout.fillWidth: true
             text: "%1 : %2".arg(model.property).arg(configLayout.currentValue)
         }
-        Slider {
-            id: configSlider
+        TextField {
+            id: configField
             Layout.fillWidth: true
-            from: model.from ?? 0
-            to: model.to ?? 1000
-            value: configLayout.currentValue ?? 0
-            stepSize: model.stepSize ?? 0
-            onMoved: {
-                configLayout.currentValue = configSlider.value
+            validator: DoubleValidator{bottom: model.from; top: model.to;}
+            text: "%1".arg(configLayout.currentValue ?? "")
+            color: configField.acceptableInput ? "black" : "red"
+            background: null
+            onAccepted: {
+                configLayout.currentValue = configField.text
                 PropertyIntrospection.writeProperty(control.currentParticalItem, model.property, configLayout.currentValue)
             }
         }

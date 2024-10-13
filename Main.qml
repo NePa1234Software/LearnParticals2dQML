@@ -23,8 +23,8 @@ import QtQuick.Layouts
 ApplicationWindow {
     id: root
 
-    width: 1200
-    height: 600
+    width: Screen.width
+    height: Screen.height
     visible: true
     title: qsTr("Partical Editor (v1.0) - by Neil Parker")
 
@@ -60,12 +60,15 @@ ApplicationWindow {
         hidden: mainToolBar.hideMode
     }
 
+    // Drawer
     ShapeConfigurator {
         id: shapeConfigurator
         currentShape: shapeEditor.currentShape
         currentParticalItem: sys.currentParticalItem
         show: mainToolBar.configMode
         onRequestClose: mainToolBar.configMode = false
+        width: Math.max(shapeConfigurator.contentWidth, 200)
+        height: parent.height
     }
 
     CustomParticleSystem {

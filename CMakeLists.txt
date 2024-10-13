@@ -44,6 +44,8 @@ qt_add_qml_module(appLearnParticles2dQML
         QML_FILES ConfigSlider.qml
         QML_FILES ConfigListModelEmitter.qml
         QML_FILES ConfigListModelAttractor.qml
+        QML_FILES ConfigDouble.qml
+        QML_FILES LabelConfigSection.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

@@ -12,8 +12,6 @@ Drawer {
     property Item currentParticalItem: null
     property bool show: false
     objectName: "ShapeConfigurator"
-    width: Math.min(parent.width * 0.3, 200)
-    height: parent.height
     edge: Qt.RightEdge
     interactive: false
     dim: false
@@ -38,18 +36,26 @@ Drawer {
     ColumnLayout {
         objectName: "ShapeConfiguratorLayout"
         anchors.fill: parent
+        anchors.margins: 5
         CustomButton {
             text: ">"
             onClicked: control.requestClose()
         }
 
+        LabelConfigSection {
+            id: sectionId
+            text: "Property configuration"
+            Layout.fillWidth: true
+            Layout.preferredHeight: sectionId.implicitHeight
+        }
+
         Label {
             id: configItemLabel
-            text: control.currentShape ? control.currentShape.objectName : "Select..."
+            text: control.currentShape ? control.currentShape.objectName : "non selected..."
         }
         Label {
             id: configParticalItemLabel
-            text: control.currentParticalItem ? control.currentParticalItem.objectName : "Select..."
+            text: control.currentParticalItem ? control.currentParticalItem.objectName : ""
         }
 
         // propertyValues is a ListModel
@@ -57,9 +63,31 @@ Drawer {
             Layout.fillWidth: true
             Layout.fillHeight: true
             model: control.show && control.currentParticalItem ? control.currentParticalItem.propertyValues : null
+            section.property: "group"
+            section.criteria: ViewSection.FullString
+            section.delegate: LabelConfigSection {
+                id: sectionId
+                required property string section
+                width: ListView.view.width
+                height: sectionId.implicitHeight
+                text: sectionId.section
+            }
             delegate: DelegateChooser {
                 role: "type"
-                DelegateChoice { roleValue: "Slider"; ConfigSlider { currentParticalItem: control.currentParticalItem; width: ListView.view.width } }
+                DelegateChoice {
+                    roleValue: "Slider";
+                    ConfigSlider {
+                        currentParticalItem: control.currentParticalItem;
+                        width: ListView.view.width
+                    }
+                }
+                DelegateChoice {
+                    roleValue: "TextDouble";
+                    ConfigDouble {
+                        currentParticalItem: control.currentParticalItem;
+                        width: ListView.view.width
+                    }
+                }
             }
         }
     }

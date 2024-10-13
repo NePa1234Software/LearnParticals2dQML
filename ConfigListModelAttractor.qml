@@ -6,5 +6,5 @@ ListModel {
     property list<string> saveProperties: [ "strength" ]
 
     // property must match the property name in the documentation (case sensitive)
-    ListElement { type: "Slider"; property: "strength"; from: 1; to: 200; stepSize: 0.1 }
+    ListElement { group: "Attractor"; type: "Slider"; property: "strength"; from: 1; to: 200; stepSize: 0.1 }
 }
